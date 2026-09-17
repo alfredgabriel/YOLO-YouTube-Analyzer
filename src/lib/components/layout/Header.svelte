@@ -10,29 +10,37 @@
   // Reactive translations
   let translations = $derived($t);
 
-  const navigateToAnalysis = () => {
-    goto("/analysis");
-  };
-
   const navigateToHome = () => {
     goto("/");
   };
 
-  const navigateToModels = () => {
-    goto("/models");
-  };
-
-  const navigateToResults = () => {
-    goto("/results");
-  };
-
-  const navigateToMonitoring = () => {
-    goto("/monitoring");
-  };
-
-  const navigateToSettings = () => {
-    goto("/settings");
-  };
+  let navItems = $derived([
+    {
+      label: translations.nav.analysis,
+      path: "/analysis",
+      icon: "M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
+    },
+    {
+      label: translations.nav.models,
+      path: "/models",
+      icon: "M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"
+    },
+    {
+      label: translations.nav.results,
+      path: "/results",
+      icon: "M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+    },
+    {
+      label: translations.nav.monitoring,
+      path: "/monitoring",
+      icon: "M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"
+    },
+    {
+      label: translations.nav.settings,
+      path: "/settings",
+      icon: "M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+    }
+  ]);
 
   const handleKeyPress = (e: KeyboardEvent, callback: () => void) => {
     if (e.key === "Enter" || e.key === " ") {
@@ -69,21 +77,13 @@
             class="absolute inset-0 bg-red-500 blur-xl opacity-50 group-hover:opacity-75 transition-opacity"
           ></div>
           <div
-            class="relative w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-red-500 to-orange-500 rounded-lg flex items-center justify-center shadow-lg shadow-red-500/50 group-hover:shadow-red-500/75 transition-all group-hover:scale-110"
+            class="relative w-8 h-8 sm:w-10 sm:h-10 rounded-lg overflow-hidden border border-orange-500/40 shadow-lg shadow-orange-500/30 group-hover:shadow-orange-500/60 transition-all group-hover:scale-110 bg-slate-900"
           >
-            <svg
-              class="w-5 h-5 sm:w-6 sm:h-6 text-white"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
-              />
-            </svg>
+            <img
+              src="/favicon.png"
+              alt="YOLO YouTube Analyzer"
+              class="w-full h-full object-cover"
+            />
           </div>
         </div>
 
@@ -103,16 +103,10 @@
 
       <!-- Desktop Navigation -->
       <nav class="hidden lg:flex items-center space-x-1">
-        {#each [{ label: translations.nav.analysis, key: "analysis", icon: "M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" }, { label: translations.nav.models, key: "models", icon: "M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" }, { label: translations.nav.results, key: "results", icon: "M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" }, { label: translations.nav.monitoring, key: "monitoring", icon: "M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" }, { label: translations.nav.settings, key: "settings", icon: "M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z M15 12a3 3 0 11-6 0 3 3 0 016 0z" }] as item}
+        {#each navItems as item}
           <button
             class="px-3 xl:px-4 py-2 text-sm font-medium text-red-100/80 hover:text-red-100 hover:bg-red-500/10 rounded-lg transition-all relative group flex items-center gap-2"
-            onclick={() => {
-              if (item.key === "analysis") navigateToAnalysis();
-              else if (item.key === "models") navigateToModels();
-              else if (item.key === "results") navigateToResults();
-              else if (item.key === "monitoring") navigateToMonitoring();
-              else if (item.key === "settings") navigateToSettings();
-            }}
+            onclick={() => goto(item.path)}
             aria-label={`Ir a ${item.label}`}
           >
             <svg
@@ -152,7 +146,7 @@
         <Button
           size="sm"
           class="text-xs sm:text-sm px-3 sm:px-4 md:px-5 py-1.5 sm:py-2"
-          onclick={navigateToAnalysis}
+          onclick={() => goto('/analysis')}
         >
           {#snippet icon()}
             <svg
@@ -224,15 +218,11 @@
             >
           </div>
 
-          {#each [{ label: translations.nav.analysis, key: "analysis", icon: "M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" }, { label: translations.nav.models, key: "models", icon: "M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" }, { label: translations.nav.results, key: "results", icon: "M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" }, { label: translations.nav.monitoring, key: "monitoring", icon: "M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" }, { label: translations.nav.settings, key: "settings", icon: "M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z M15 12a3 3 0 11-6 0 3 3 0 016 0z" }] as item}
+          {#each navItems as item}
             <button
               class="w-full px-4 py-3 text-sm font-medium text-red-100/80 hover:text-red-100 hover:bg-red-500/10 rounded-lg transition-all flex items-center gap-3 text-left"
               onclick={() => {
-                if (item.key === "analysis") navigateToAnalysis();
-                else if (item.key === "models") navigateToModels();
-                else if (item.key === "results") navigateToResults();
-                else if (item.key === "monitoring") navigateToMonitoring();
-                else if (item.key === "settings") navigateToSettings();
+                goto(item.path);
                 mobileMenuOpen = false;
               }}
               aria-label={`Ir a ${item.label}`}
