@@ -1,7 +1,7 @@
 {
-  "name": "tauri-app",
-  "version": "0.1.0",
-  "description": "",
+  "name": "yolo-youtube-analyzer",
+  "version": "1.0.0",
+  "description": "YOLO YouTube Analyzer - Object detection and analysis for YouTube videos",
   "type": "module",
   "scripts": {
     "dev": "vite dev",

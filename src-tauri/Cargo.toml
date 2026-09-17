@@ -1,12 +1,12 @@
 [package]
-name = "tauri-app"
-version = "0.1.0"
-description = "A Tauri App"
-authors = ["you"]
+name = "yolo-youtube-analyzer"
+version = "1.0.0"
+description = "YOLO object detection on YouTube videos — Tauri desktop app"
+authors = ["alfredgabriel"]
 edition = "2021"
 
 [lib]
-name = "tauri_app_lib"
+name = "yolo_youtube_analyzer_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
 [build-dependencies]

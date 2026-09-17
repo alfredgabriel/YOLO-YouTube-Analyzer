@@ -1,8 +1,8 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "tauri-app",
-  "version": "0.1.0",
-  "identifier": "com.ikaslepcd.tauri-app",
+  "productName": "YOLO YouTube Analyzer",
+  "version": "1.0.0",
+  "identifier": "com.yolo-youtube-analyzer.app",
   "build": {
     "beforeDevCommand": "npm run dev",
     "devUrl": "http://localhost:1420",
@@ -12,17 +12,23 @@
   "app": {
     "windows": [
       {
-        "title": "tauri-app",
-        "width": 800,
-        "height": 600
+        "label": "main",
+        "title": "YOLO YouTube Analyzer",
+        "width": 1280,
+        "height": 800,
+        "minWidth": 960,
+        "minHeight": 600,
+        "center": true
       }
     ],
     "security": {
-      "csp": null,
+      "csp": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self'; img-src 'self' https://img.youtube.com https://i.ytimg.com data: blob:; media-src 'self' blob:",
       "assetProtocol": {
         "enable": true,
         "scope": [
-          "**"
+          "$APPDATA/**",
+          "$DOCUMENT/YoloModels/**",
+          "$DOCUMENT/YoloResults/**"
         ]
       },
       "capabilities": [
@@ -32,7 +38,7 @@
   },
   "plugins": {
     "shell": {
-      "open": "^.*$"
+      "open": "^https?://"
     }
   },
   "bundle": {
