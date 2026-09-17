@@ -1,6 +1,5 @@
 use tauri::Manager;
 use tauri::Emitter;
-use tauri_plugin_shell::ShellExt;
 use std::fs;
 use std::path::PathBuf;
 use serde::{Deserialize, Serialize};
@@ -357,7 +356,7 @@ async fn start_live_analysis(
 ) -> Result<String, String> {
     // Verificar si ya hay un análisis en curso
     {
-        let mut active_session = state.active_session.lock().map_err(|e| e.to_string())?;
+        let active_session = state.active_session.lock().map_err(|e| e.to_string())?;
         if active_session.is_some() {
             return Err("Ya hay un análisis en curso. Detenlo antes de iniciar uno nuevo.".to_string());
         }
@@ -522,7 +521,7 @@ async fn start_video_analysis(
 ) -> Result<String, String> {
     // Verificar si ya hay un análisis en curso
     {
-        let mut active_session = state.active_session.lock().map_err(|e| e.to_string())?;
+        let active_session = state.active_session.lock().map_err(|e| e.to_string())?;
         if active_session.is_some() {
             return Err("Ya hay un análisis en curso. Detenlo antes de iniciar uno nuevo.".to_string());
         }

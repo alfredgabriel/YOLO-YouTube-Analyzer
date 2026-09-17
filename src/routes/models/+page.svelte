@@ -214,39 +214,43 @@
   let modelsDir = $state("");
 
   // Verificar modelos descargados al cargar
-  onMount(async () => {
-    await loadDownloadedModels();
+  onMount(() => {
+    let unlisten: (() => void) | undefined;
 
-    // Cargar configuración persistente
-    const savedConfig = loadModelsConfig();
-    if (savedConfig) {
-      models = applyConfigToModels(models, savedConfig);
-    }
+    (async () => {
+      await loadDownloadedModels();
 
-    // Escuchar eventos de progreso de descarga
-    const unlisten = await listen<{
-      model_id: string;
-      downloaded: number;
-      total: number;
-      percentage: number;
-    }>("download-progress", (event) => {
-      const { model_id, percentage } = event.payload;
-      const model = models.find((m) => m.id === model_id);
-      if (model) {
-        model.downloadProgress = Math.round(percentage);
+      // Cargar configuración persistente
+      const savedConfig = loadModelsConfig();
+      if (savedConfig) {
+        models = applyConfigToModels(models, savedConfig);
       }
-    });
 
-    // Obtener directorio de modelos
-    try {
-      modelsDir = await invoke<string>("get_models_dir");
-      console.log("Directorio de modelos:", modelsDir);
-    } catch (error) {
-      console.error("Error obteniendo directorio:", error);
-    }
+      // Escuchar eventos de progreso de descarga
+      unlisten = await listen<{
+        model_id: string;
+        downloaded: number;
+        total: number;
+        percentage: number;
+      }>("download-progress", (event) => {
+        const { model_id, percentage } = event.payload;
+        const model = models.find((m) => m.id === model_id);
+        if (model) {
+          model.downloadProgress = Math.round(percentage);
+        }
+      });
+
+      // Obtener directorio de modelos
+      try {
+        modelsDir = await invoke<string>("get_models_dir");
+        console.log("Directorio de modelos:", modelsDir);
+      } catch (error) {
+        console.error("Error obteniendo directorio:", error);
+      }
+    })();
 
     return () => {
-      unlisten();
+      if (unlisten) unlisten();
     };
   });
 
@@ -353,13 +357,14 @@
   }
 
   async function confirmDelete() {
-    if (!modelToDelete) return;
+    const target = modelToDelete;
+    if (!target) return;
 
-    if (modelToDelete.isCustom) {
+    if (target.isCustom) {
       // Eliminar modelo personalizado del sistema de archivos y de la lista
       try {
-        await invoke("delete_model", { fileName: modelToDelete.fileName });
-        models = models.filter((m) => m.id !== modelToDelete.id);
+        await invoke("delete_model", { fileName: target.fileName });
+        models = models.filter((m) => m.id !== target.id);
         saveModelsConfig(models); // Save deletion
       } catch (error) {
         console.error("Error eliminando modelo personalizado:", error);
@@ -368,9 +373,9 @@
     } else {
       // Eliminar modelo preconfigurado solo del disco
       try {
-        await invoke("delete_model", { fileName: modelToDelete.fileName });
-        modelToDelete.downloaded = false;
-        modelToDelete.active = false;
+        await invoke("delete_model", { fileName: target.fileName });
+        target.downloaded = false;
+        target.active = false;
         saveModelsConfig(models); // Save state
       } catch (error) {
         console.error("Error eliminando modelo:", error);

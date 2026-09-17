@@ -13,8 +13,8 @@
   let pupilY = $state(0);
   let targetX = 30;
   let targetY = 0;
-  let scanInterval: any;
-  let targetInterval: any;
+  let scanInterval: ReturnType<typeof setInterval> | undefined;
+  let targetInterval: ReturnType<typeof setInterval> | undefined;
   let scanPhase = $state(0);
   let isVerticalLayout = $state(false);
 

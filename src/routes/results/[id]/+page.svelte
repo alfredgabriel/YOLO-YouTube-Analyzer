@@ -51,7 +51,9 @@
     // Obtener ID de la URL
     $effect(() => {
         const id = $page.params.id;
-        loadAnalysis(id);
+        if (id) {
+            loadAnalysis(id);
+        }
     });
 
     async function loadAnalysis(id: string) {
